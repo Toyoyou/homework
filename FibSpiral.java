@@ -18,35 +18,25 @@ public class FibSpiral {
         Location origin = new Location(point);
         switch(direction%4){
             case 0:
+                origin.translate(f*scale,0);
                 break;
             case 1:
-                origin.translate(-f*scale,0);
+                origin.translate(fib(n-2)*scale,f*scale);
+                point.translate(-f*scale,0);
                 break;
             case 2:
-                origin.translate(-f*scale,-f*scale);
+                origin.translate(-fib(n-1)*scale,fib(n-2)*scale);
+                point.translate(-f*scale,-f*scale);
                 break;
             case 3:
-                origin.translate(0,-f*scale);
+                origin.translate(0,-fib(n-1)*scale);
+                point.translate(0,-f*scale);
         }
         
-        new FramedArc(origin,f*2*scale,f*2*scale,angle,90,canvas);
+        new FramedArc(point,f*2*scale,f*2*scale,angle,90,canvas);
         
         if(n>1){
-            switch(direction%4){
-                case 0:
-                    point.translate(f*scale,0);
-                    break;
-                case 1:
-                    point.translate(fib(n-2)*scale,f*scale);
-                    break;
-                case 2:
-                    point.translate(-fib(n-1)*scale,fib(n-2)*scale);
-                    break;
-                case 3:
-                    point.translate(0,-fib(n-1)*scale);
-                    break;
-            }
-            child = new FibSpiral(point,n-1,direction+1,canvas);
+            child = new FibSpiral(origin,n-1,direction+1,canvas);
         }
     }
     
